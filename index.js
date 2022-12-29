@@ -32,6 +32,19 @@ const dbConnect = () => {
         const mytasks = await allTasks.find(query).toArray()
         res.send(mytasks)
     })
+    //Get all Completed Task for a Specific User
+    app.get('/completedtasks', async(req, res)=>{
+        //Get the User Email from the query
+        const email = req.query.email;
+        //Set the Query
+        const query = {
+            authorEmail: email,
+            status: 'Completed'
+        }
+         //Find the data from the collection
+         const completedTasks = await allTasks.find(query).toArray()
+         res.send(completedTasks)
+    })
     //Update a Specific Task
     app.put('/updatetask/:id', async(req, res)=> {
         const id = req.params.id
