@@ -43,6 +43,13 @@ const dbConnect = () => {
         res.send(result)
 
     })
+    //Delete a specific task
+    app.delete('/deletetask/:id', async(req, res)=> {
+        const id = req.params.id;
+        const query = {_id: ObjectId(id)}
+        const result = await allTasks.deleteOne(query)
+        res.send(result)
+    })
 
 }
 dbConnect()
