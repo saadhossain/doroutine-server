@@ -32,6 +32,13 @@ const dbConnect = () => {
         const mytasks = await allTasks.find(query).toArray()
         res.send(mytasks)
     })
+    //Get a single task
+    app.get('/singletask/:id', async(req, res) => {
+        const id = req.params.id;
+        const query = {_id:ObjectId(id)}
+        const singleTask = await allTasks.find(query).toArray()
+        res.send(singleTask)
+    })
     //Get all Completed Task for a Specific User
     app.get('/completedtasks', async(req, res)=>{
         //Get the User Email from the query
@@ -48,12 +55,13 @@ const dbConnect = () => {
     //Update a Specific Task
     app.put('/updatetask/:id', async(req, res)=> {
         const id = req.params.id
-        const status = req.body;
+        const update = req.body;
         const options = {upsert: true}
         const filter = {_id: ObjectId(id)}
-        const updatedTask = {$set:status}
+        const updatedTask = {$set:update}
         const result = await allTasks.updateOne(filter,updatedTask, options)
         res.send(result)
+        console.log(result);
 
     })
     //Delete a specific task
